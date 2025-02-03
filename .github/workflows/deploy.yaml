@@ -43,7 +43,7 @@ jobs:
         run: aws s3 cp "$(pwd)/sample.zip" s3://thekloudwiz-nodejsv2/sample.zip
 
       - name: Create New application version
-        run: aws elasticbeanstalk create-application-version --application-name thekloudwiz-nodejs --version-label ${{ github.sha }} --source-bundle S3Bucket=thekloudwiz-nodejs,S3Key=sample.zip
+        run: aws elasticbeanstalk create-application-version --application-name thekloudwiz-nodejs --version-label ${{ github.sha }} --source-bundle S3Bucket=thekloudwiz-nodejsv2,S3Key=sample.zip
             
       - name: 🚀 Deploy New Application Version
         run: aws elasticbeanstalk update-environment --application-name thekloudwiz-nodejsv2 --environment-name thekloudwiz-nodejs-env --version-label ${{ github.sha }}

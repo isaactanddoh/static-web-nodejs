@@ -47,4 +47,4 @@ jobs:
         run: aws elasticbeanstalk create-application-version --application-name Sample-Node-App  --version-label ${{ github.sha }} --source-bundle S3Bucket=sample-node-app070225,S3Key=sample.zip
             
       - name: 🚀 Deploy New Application Version
-        run: aws elasticbeanstalk update-environment --application-name Sample-Node-App --environment-name Sample-Node-env --version-label ${{ github.sha }}
+        run: aws elasticbeanstalk update-environment --application-name Sample-Node-env-App --environment-name Sample-Node-env --version-label ${{ github.sha }}

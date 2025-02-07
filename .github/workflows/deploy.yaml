@@ -1,50 +1,50 @@
-name: Deploy to AWS Elastic Beanstalk
+# name: Deploy to AWS Elastic Beanstalk
 
-on:
+# on:
        
-  push:
-    branches:
-      - main
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🛎 Checkout Repository
-        uses: actions/checkout@v4
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: 🛎 Checkout Repository
+#         uses: actions/checkout@v4
       
-      - name: 🚀 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+#       - name: 🚀 Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: 'npm'
       
-      - name: 📦 Install Dependencies
-        run: npm install
+#       - name: 📦 Install Dependencies
+#         run: npm install
 
-      # - name: 🏗️ Build Project
-      #   run: npm run build
+#       # - name: 🏗️ Build Project
+#       #   run: npm run build
 
-      - name: 📦 Archive Build Artifacts
-        run: zip -r sample.zip . -x "*.git*" "node_modules/*"
+#       - name: 📦 Archive Build Artifacts
+#         run: zip -r sample.zip . -x "*.git*" "node_modules/*"
 
-      - name: Verify
-        run: |
-          pwd
-          ls -la 
+#       - name: Verify
+#         run: |
+#           pwd
+#           ls -la
 
-      - name: 🔑 Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ vars.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       - name: 🔑 Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           aws-region: ${{ vars.AWS_REGION }}
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: 🚀 Upload S3
-        run: aws s3 cp "$(pwd)/sample.zip" s3://sample-node-app070225/sample.zip
+#       - name: 🚀 Upload S3
+#         run: aws s3 cp "$(pwd)/sample.zip" s3://sample-node-app070225/sample.zip
 
-      - name: Create New application version
-        run: aws elasticbeanstalk create-application-version --application-name Sample-Node-App  --version-label ${{ github.sha }} --source-bundle S3Bucket=sample-node-app070225,S3Key=sample.zip
+#       - name: Create New application version
+#         run: aws elasticbeanstalk create-application-version --application-name Sample-Node-App  --version-label ${{ github.sha }} --source-bundle S3Bucket=sample-node-app070225,S3Key=sample.zip
             
-      - name: 🚀 Deploy New Application Version
-        run: aws elasticbeanstalk update-environment --application-name Sample-Node-App --environment-name Sample-Node-App-env --version-label ${{ github.sha }}
+#       - name: 🚀 Deploy New Application Version
+#         run: aws elasticbeanstalk update-environment --application-name Sample-Node-App --environment-name Sample-Node-App-env --version-label ${{ github.sha }}

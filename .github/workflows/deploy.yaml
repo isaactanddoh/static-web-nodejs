@@ -41,10 +41,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: 🚀 Upload S3
-        run: aws s3 cp "$(pwd)/sample.zip" s3://thekloudwiz-nodejsv2/sample.zip
+        run: | 
+          aws s3 rm -f s3://sample-node-app070225/sample.zip
+          aws s3 cp "$(pwd)/sample.zip" s3://sample-node-app070225/sample.zip
+
 
       - name: Create New application version
-        run: aws elasticbeanstalk create-application-version --application-name Sample-Node  --version-label ${{ github.sha }} --source-bundle S3Bucket=thekloudwiz-nodejsv2,S3Key=sample.zip
+        run: aws elasticbeanstalk create-application-version --application-name Sample-Node-App  --version-label ${{ github.sha }} --source-bundle S3Bucket=thekloudwiz-nodejsv2,S3Key=sample.zip
             
       - name: 🚀 Deploy New Application Version
-        run: aws elasticbeanstalk update-environment --application-name Sample-Node-env --environment-name Sample-Node-env --version-label ${{ github.sha }}
+        run: aws elasticbeanstalk update-environment --application-name Sample-Node-App --environment-name Sample-Node-env --version-label ${{ github.sha }}

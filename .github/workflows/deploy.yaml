@@ -1,12 +1,10 @@
 name: Deploy to AWS Elastic Beanstalk
 
 on:
-
-  workflow_dispatch:
        
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -24,8 +22,8 @@ jobs:
       - name: 📦 Install Dependencies
         run: npm install
 
-      # - name: 🏗️ Build Project
-      #   run: npm run build
+      - name: 🏗️ Build Project
+        run: npm run build
 
       - name: 📦 Archive Build Artifacts
         run: zip -r sample.zip . -x "*.git*" "node_modules/*"
